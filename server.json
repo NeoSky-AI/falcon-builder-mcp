@@ -1,0 +1,185 @@
+{
+  "_about": "Metadata-only patch for the Falcon Builder MCP server (https://www.falconbuilder.dev/api/mcp). Adds MCP tool annotations (title, readOnlyHint, destructiveHint, idempotentHint, openWorldHint) to all 28 tools and descriptions for every input parameter that currently has none. No tool behavior changes. Targets Smithery quality checks: Annotations 0/28 -> 28/28 and Parameter descriptions 7/28 -> 28/28.",
+  "tools": {
+    "whoami": {
+      "annotations": { "title": "Who am I", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "list_agents": {
+      "annotations": { "title": "List agents", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "limit": "Maximum number of agents to return (1-100).",
+        "name_contains": "Case-insensitive substring to filter agents by name.",
+        "offset": "Number of agents to skip, for pagination.",
+        "workspace_id": "Workspace to list from. Defaults to the active workspace. Workspace ids come from whoami."
+      }
+    },
+    "list_workflows": {
+      "annotations": { "title": "List workflows", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "include_inactive": "Include inactive workflows in the results.",
+        "limit": "Maximum number of workflows to return (1-100).",
+        "name_contains": "Case-insensitive substring to filter workflows by name.",
+        "offset": "Number of workflows to skip, for pagination.",
+        "workspace_id": "Workspace to list from. Defaults to the active workspace. Workspace ids come from whoami."
+      }
+    },
+    "get_workflow": {
+      "annotations": { "title": "Get workflow diagnostics", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring."
+      }
+    },
+    "get_workflow_definition": {
+      "annotations": { "title": "Get workflow definition", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "which": "Which graph to return: \"draft\" or the published \"live\" version.",
+        "workflow": "Workflow id, id prefix, or name substring."
+      }
+    },
+    "get_workflow_node": {
+      "annotations": { "title": "Get workflow node", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring."
+      }
+    },
+    "validate_workflow": {
+      "annotations": { "title": "Validate workflow draft", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring."
+      }
+    },
+    "list_executions": {
+      "annotations": { "title": "List executions", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring.",
+        "status": "Only return executions in this status.",
+        "limit": "Maximum number of executions to return (1-50)."
+      }
+    },
+    "get_execution": {
+      "annotations": { "title": "Get execution details", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "execution": "Execution id or id prefix, from list_executions.",
+        "expand_node_ids": "Node ids whose capped input and output payloads should be included (up to 10).",
+        "tail": "Number of most recent log lines to include (1-100)."
+      }
+    },
+    "get_execution_logs": {
+      "annotations": { "title": "Get execution logs", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "execution": "Execution id or id prefix, from list_executions.",
+        "level": "Only return log lines at this level.",
+        "limit": "Maximum number of log lines to return (1-200).",
+        "offset": "Number of log lines to skip, for pagination."
+      }
+    },
+    "list_workflow_versions": {
+      "annotations": { "title": "List workflow versions", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring."
+      }
+    },
+    "list_interfaces": {
+      "annotations": { "title": "List interfaces", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "limit": "Maximum number of interfaces to return (1-100).",
+        "offset": "Number of interfaces to skip, for pagination."
+      }
+    },
+    "get_interface": {
+      "annotations": { "title": "Get interface", "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "switch_workspace": {
+      "annotations": { "title": "Switch active workspace", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workspace_id": "Workspace id to make active for this session, from whoami."
+      }
+    },
+    "create_workflow": {
+      "annotations": { "title": "Create draft workflow", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {
+        "name": "Name of the new draft workflow.",
+        "nodes": "Optional initial nodes, each { type, id?, label?, config?, position? }, the same shape as edit_workflow add_node.",
+        "edges": "Optional initial edges, each { source, target, source_handle?, target_handle? }."
+      }
+    },
+    "edit_workflow": {
+      "annotations": { "title": "Edit workflow draft", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring.",
+        "operations": "Up to 30 patch operations applied to the draft in order: add_node, update_node, remove_node, add_edge, remove_edge.",
+        "rename_to": "Optional new name for the workflow."
+      }
+    },
+    "duplicate_workflow": {
+      "annotations": { "title": "Duplicate workflow", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "duplicate_agent": {
+      "annotations": { "title": "Duplicate agent", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "create_interface": {
+      "annotations": { "title": "Create interface", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "update_interface": {
+      "annotations": { "title": "Update interface settings", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "access_mode": "New access mode for the interface.",
+        "title": "New title shown to end users."
+      }
+    },
+    "add_interface_access_rule": {
+      "annotations": { "title": "Add interface access rule", "readOnlyHint": false, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "rule_type": "EMAIL to allow one address, or DOMAIN to allow everyone at a domain."
+      }
+    },
+    "remove_interface_access_rule": {
+      "annotations": { "title": "Remove interface access rule", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "rule_type": "EMAIL to remove one address, or DOMAIN to remove a whole domain.",
+        "value": "The email address or bare domain to remove, exactly as shown by get_interface."
+      }
+    },
+    "delete_interface": {
+      "annotations": { "title": "Delete interface", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {}
+    },
+    "run_workflow": {
+      "annotations": { "title": "Run workflow", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": true },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring.",
+        "input": "Input payload passed to the workflow trigger.",
+        "confirm": "Must be exactly true. Acknowledges that the run fires real side effects and counts against the execution limit."
+      }
+    },
+    "rerun_executions": {
+      "annotations": { "title": "Re-run executions", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": true },
+      "parameterDescriptions": {}
+    },
+    "publish_workflow": {
+      "annotations": { "title": "Publish workflow to production", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring.",
+        "description": "Optional release note stored with the new version."
+      }
+    },
+    "rollback_workflow": {
+      "annotations": { "title": "Roll back workflow", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "workflow": "Workflow id, id prefix, or name substring.",
+        "confirm": "Must be exactly true. Acknowledges that production switches to the restored version and the current draft is overwritten."
+      }
+    },
+    "publish_interface": {
+      "annotations": { "title": "Publish or unpublish interface", "readOnlyHint": false, "destructiveHint": true, "idempotentHint": true, "openWorldHint": false },
+      "parameterDescriptions": {
+        "published": "true makes the interface live; false takes it dark and its URL returns 404."
+      }
+    }
+  }
+}
