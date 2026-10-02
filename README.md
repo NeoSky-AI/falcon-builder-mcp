@@ -10,6 +10,8 @@ Available on every plan, including Free.
 
 This is a hosted server. Nothing to install or run locally.
 
+[![smithery badge](https://smithery.ai/badge/mark-cqxq/falcon-builder)](https://smithery.ai/servers/mark-cqxq/falcon-builder)
+
 ## Connect
 
 ### OAuth clients: claude.ai, Claude Desktop, ChatGPT
